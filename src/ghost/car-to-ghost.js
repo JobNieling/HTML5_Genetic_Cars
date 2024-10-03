@@ -1,9 +1,8 @@
-
-module.exports = function(car) {
+module.exports = function (car) {
   var out = {
     chassis: ghost_get_chassis(car.chassis),
     wheels: [],
-    pos: {x: car.chassis.GetPosition().x, y: car.chassis.GetPosition().y}
+    pos: { x: car.chassis.GetPosition().x, y: car.chassis.GetPosition().y },
   };
 
   for (var i = 0; i < car.wheels.length; i++) {
@@ -11,7 +10,7 @@ module.exports = function(car) {
   }
 
   return out;
-}
+};
 
 function ghost_get_chassis(c) {
   var gc = [];
@@ -21,8 +20,8 @@ function ghost_get_chassis(c) {
 
     var p = {
       vtx: [],
-      num: 0
-    }
+      num: 0,
+    };
 
     p.num = s.m_vertexCount;
 
@@ -45,8 +44,8 @@ function ghost_get_wheel(w) {
     var c = {
       pos: w.GetWorldPoint(s.m_p),
       rad: s.m_radius,
-      ang: w.m_sweep.a
-    }
+      ang: w.m_sweep.a,
+    };
 
     gw.push(c);
   }

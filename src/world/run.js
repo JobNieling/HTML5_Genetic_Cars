@@ -18,7 +18,7 @@ function runDefs(world_def, defs, listeners) {
       index: i,
       def: def,
       car: defToCar(def, scene.world, world_def),
-      state: carRun.getInitialState(world_def)
+      state: carRun.getInitialState(world_def),
     };
   });
   var alivecars = cars;
@@ -32,9 +32,7 @@ function runDefs(world_def, defs, listeners) {
       scene.world.Step(1 / world_def.box2dfps, 20, 20);
       listeners.preCarStep();
       alivecars = alivecars.filter(function (car) {
-        car.state = carRun.updateState(
-          world_def, car.car, car.state
-        );
+        car.state = carRun.updateState(world_def, car.car, car.state);
         var status = carRun.getStatus(car.state, world_def);
         listeners.carStep(car);
         if (status === 0) {
@@ -52,11 +50,10 @@ function runDefs(world_def, defs, listeners) {
         }
 
         return false;
-      })
+      });
       if (alivecars.length === 0) {
         listeners.generationEnd(cars);
       }
-    }
-  }
-
+    },
+  };
 }

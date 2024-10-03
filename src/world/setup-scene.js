@@ -13,8 +13,7 @@ world_def = {
 
 */
 
-module.exports = function(world_def){
-
+module.exports = function (world_def) {
   var world = new b2World(world_def.gravity, world_def.doSleep);
   var floorTiles = cw_createFloor(
     world,
@@ -24,9 +23,7 @@ module.exports = function(world_def){
     world_def.mutable_floor
   );
 
-  var last_tile = floorTiles[
-    floorTiles.length - 1
-  ];
+  var last_tile = floorTiles[floorTiles.length - 1];
   var last_fixture = last_tile.GetFixtureList();
   var tile_position = last_tile.GetWorldPoint(
     last_fixture.GetShape().m_vertices[3]
@@ -35,11 +32,17 @@ module.exports = function(world_def){
   return {
     world: world,
     floorTiles: floorTiles,
-    finishLine: tile_position.x
+    finishLine: tile_position.x,
   };
-}
+};
 
-function cw_createFloor(world, floorseed, dimensions, maxFloorTiles, mutable_floor) {
+function cw_createFloor(
+  world,
+  floorseed,
+  dimensions,
+  maxFloorTiles,
+  mutable_floor
+) {
   var last_tile = null;
   var tile_position = new b2Vec2(-5, 0);
   var cw_floorTiles = [];
@@ -48,21 +51,28 @@ function cw_createFloor(world, floorseed, dimensions, maxFloorTiles, mutable_flo
     if (!mutable_floor) {
       // keep old impossible tracks if not using mutable floors
       last_tile = cw_createFloorTile(
-        world, dimensions, tile_position, (Math.random() * 3 - 1.5) * 1.5 * k / maxFloorTiles
+        world,
+        dimensions,
+        tile_position,
+        ((Math.random() * 3 - 1.5) * 1.5 * k) / maxFloorTiles
       );
     } else {
       // if path is mutable over races, create smoother tracks
       last_tile = cw_createFloorTile(
-        world, dimensions, tile_position, (Math.random() * 3 - 1.5) * 1.2 * k / maxFloorTiles
+        world,
+        dimensions,
+        tile_position,
+        ((Math.random() * 3 - 1.5) * 1.2 * k) / maxFloorTiles
       );
     }
     cw_floorTiles.push(last_tile);
     var last_fixture = last_tile.GetFixtureList();
-    tile_position = last_tile.GetWorldPoint(last_fixture.GetShape().m_vertices[3]);
+    tile_position = last_tile.GetWorldPoint(
+      last_fixture.GetShape().m_vertices[3]
+    );
   }
   return cw_floorTiles;
 }
-
 
 function cw_createFloorTile(world, dim, position, angle) {
   var body_def = new b2BodyDef();
@@ -90,10 +100,16 @@ function cw_createFloorTile(world, dim, position, angle) {
 }
 
 function cw_rotateFloorTile(coords, center, angle) {
-  return coords.map(function(coord){
+  return coords.map(function (coord) {
     return {
-      x: Math.cos(angle) * (coord.x - center.x) - Math.sin(angle) * (coord.y - center.y) + center.x,
-      y: Math.sin(angle) * (coord.x - center.x) + Math.cos(angle) * (coord.y - center.y) + center.y,
+      x:
+        Math.cos(angle) * (coord.x - center.x) -
+        Math.sin(angle) * (coord.y - center.y) +
+        center.x,
+      y:
+        Math.sin(angle) * (coord.x - center.x) +
+        Math.cos(angle) * (coord.y - center.y) +
+        center.y,
     };
   });
 }

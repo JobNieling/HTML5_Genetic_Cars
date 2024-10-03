@@ -6,11 +6,13 @@ var createInstance = require("../machine-learning/create-instance");
 
 module.exports = defToCar;
 
-function defToCar(normal_def, world, constants){
-  var car_def = createInstance.applyTypes(constants.schema, normal_def)
+function defToCar(normal_def, world, constants) {
+  var car_def = createInstance.applyTypes(constants.schema, normal_def);
   var instance = {};
   instance.chassis = createChassis(
-    world, car_def.vertex_list, car_def.chassis_density
+    world,
+    car_def.vertex_list,
+    car_def.chassis_density
   );
   var i;
 
@@ -33,7 +35,7 @@ function defToCar(normal_def, world, constants){
   var joint_def = new b2RevoluteJointDef();
 
   for (i = 0; i < wheelCount; i++) {
-    var torque = carmass * -constants.gravity.y / car_def.wheel_radius[i];
+    var torque = (carmass * -constants.gravity.y) / car_def.wheel_radius[i];
 
     var randvertex = instance.chassis.vertex_list[car_def.wheel_vertex[i]];
     joint_def.localAnchorA.Set(randvertex.x, randvertex.y);
@@ -50,7 +52,6 @@ function defToCar(normal_def, world, constants){
 }
 
 function createChassis(world, vertexs, density) {
-
   var vertex_list = new Array();
   vertex_list.push(new b2Vec2(vertexs[0], 0));
   vertex_list.push(new b2Vec2(vertexs[1], vertexs[2]));
@@ -80,7 +81,6 @@ function createChassis(world, vertexs, density) {
 
   return body;
 }
-
 
 function createChassisPart(body, vertex1, vertex2, density) {
   var vertex_list = new Array();

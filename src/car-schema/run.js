@@ -1,5 +1,3 @@
-
-
 module.exports = {
   getInitialState: getInitialState,
   updateState: updateState,
@@ -7,7 +5,7 @@ module.exports = {
   calculateScore: calculateScore,
 };
 
-function getInitialState(world_def){
+function getInitialState(world_def) {
   return {
     frames: 0,
     health: world_def.max_car_health,
@@ -17,11 +15,11 @@ function getInitialState(world_def){
   };
 }
 
-function updateState(constants, worldConstruct, state){
-  if(state.health <= 0){
+function updateState(constants, worldConstruct, state) {
+  if (state.health <= 0) {
     throw new Error("Already Dead");
   }
-  if(state.maxPositionx > constants.finishLine){
+  if (state.maxPositionx > constants.finishLine) {
     throw new Error("already Finished");
   }
 
@@ -31,9 +29,12 @@ function updateState(constants, worldConstruct, state){
   // check if car reached end of the path
   var nextState = {
     frames: state.frames + 1,
-    maxPositionx: position.x > state.maxPositionx ? position.x : state.maxPositionx,
-    maxPositiony: position.y > state.maxPositiony ? position.y : state.maxPositiony,
-    minPositiony: position.y < state.minPositiony ? position.y : state.minPositiony
+    maxPositionx:
+      position.x > state.maxPositionx ? position.x : state.maxPositionx,
+    maxPositiony:
+      position.y > state.maxPositiony ? position.y : state.maxPositiony,
+    minPositiony:
+      position.y < state.minPositiony ? position.y : state.minPositiony,
   };
 
   if (position.x > constants.finishLine) {
@@ -51,20 +52,20 @@ function updateState(constants, worldConstruct, state){
   return nextState;
 }
 
-function getStatus(state, constants){
-  if(hasFailed(state, constants)) return -1;
-  if(hasSuccess(state, constants)) return 1;
+function getStatus(state, constants) {
+  if (hasFailed(state, constants)) return -1;
+  if (hasSuccess(state, constants)) return 1;
   return 0;
 }
 
-function hasFailed(state /*, constants */){
+function hasFailed(state /*, constants */) {
   return state.health <= 0;
 }
-function hasSuccess(state, constants){
+function hasSuccess(state, constants) {
   return state.maxPositionx > constants.finishLine;
 }
 
-function calculateScore(state, constants){
+function calculateScore(state, constants) {
   var avgspeed = (state.maxPositionx / state.frames) * constants.box2dfps;
   var position = state.maxPositionx;
   var score = position + avgspeed;
@@ -73,6 +74,6 @@ function calculateScore(state, constants){
     s: avgspeed,
     x: position,
     y: state.maxPositiony,
-    y2: state.minPositiony
-  }
+    y2: state.minPositiony,
+  };
 }

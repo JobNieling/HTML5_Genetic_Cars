@@ -2,16 +2,16 @@ var create = require("../create-instance");
 
 module.exports = {
   generationZero: generationZero,
-  nextGeneration: nextGeneration
-}
+  nextGeneration: nextGeneration,
+};
 
-function generationZero(config){
+function generationZero(config) {
   var generationSize = config.generationSize,
-  schema = config.schema;
+    schema = config.schema;
   var cw_carGeneration = [];
   for (var k = 0; k < generationSize; k++) {
-    var def = create.createGenerationZero(schema, function(){
-      return Math.random()
+    var def = create.createGenerationZero(schema, function () {
+      return Math.random();
     });
     def.index = k;
     cw_carGeneration.push(def);
@@ -22,18 +22,15 @@ function generationZero(config){
   };
 }
 
-function nextGeneration(
-  previousState,
-  scores,
-  config
-){
+function nextGeneration(previousState, scores, config) {
   var champion_length = config.championLength,
     generationSize = config.generationSize,
     selectFromAllParents = config.selectFromAllParents;
 
   var newGeneration = new Array();
   var newborn;
-  for (var k = 0; k < champion_length; k++) {``
+  for (var k = 0; k < champion_length; k++) {
+    ``;
     scores[k].def.is_elite = true;
     scores[k].def.index = k;
     newGeneration.push(scores[k].def);
@@ -45,10 +42,13 @@ function nextGeneration(
     while (parent2 == parent1) {
       parent2 = selectFromAllParents(scores, parentList, parent1);
     }
-    var pair = [parent1, parent2]
+    var pair = [parent1, parent2];
     parentList.push(pair);
-    newborn = makeChild(config,
-      pair.map(function(parent) { return scores[parent].def; })
+    newborn = makeChild(
+      config,
+      pair.map(function (parent) {
+        return scores[parent].def;
+      })
     );
     newborn = mutate(config, newborn);
     newborn.is_elite = false;
@@ -62,15 +62,13 @@ function nextGeneration(
   };
 }
 
-
-function makeChild(config, parents){
+function makeChild(config, parents) {
   var schema = config.schema,
     pickParent = config.pickParent;
-  return create.createCrossBreed(schema, parents, pickParent)
+  return create.createCrossBreed(schema, parents, pickParent);
 }
 
-
-function mutate(config, parent){
+function mutate(config, parent) {
   var schema = config.schema,
     mutation_range = config.mutation_range,
     gen_mutation = config.gen_mutation,
@@ -81,5 +79,5 @@ function mutate(config, parent){
     parent,
     Math.max(mutation_range),
     gen_mutation
-  )
+  );
 }

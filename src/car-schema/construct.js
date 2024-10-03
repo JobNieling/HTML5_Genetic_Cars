@@ -3,10 +3,10 @@ var carConstants = require("./car-constants.json");
 module.exports = {
   worldDef: worldDef,
   carConstants: getCarConstants,
-  generateSchema: generateSchema
-}
+  generateSchema: generateSchema,
+};
 
-function worldDef(){
+function worldDef() {
   var box2dfps = 60;
   return {
     gravity: { y: 0 },
@@ -19,16 +19,16 @@ function worldDef(){
     max_car_health: box2dfps * 10,
     tileDimensions: {
       width: 1.5,
-      height: 0.15
-    }
+      height: 0.15,
+    },
   };
 }
 
-function getCarConstants(){
+function getCarConstants() {
   return carConstants;
 }
 
-function generateSchema(values){
+function generateSchema(values) {
   return {
     wheel_radius: {
       type: "float",

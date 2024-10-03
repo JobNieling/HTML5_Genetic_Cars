@@ -1,6 +1,4 @@
-
-
-module.exports = function(ctx, body, vtx, n_vtx) {
+module.exports = function (ctx, body, vtx, n_vtx) {
   // set strokestyle and fillstyle before call
   // call beginPath before call
 
@@ -11,4 +9,4 @@ module.exports = function(ctx, body, vtx, n_vtx) {
     ctx.lineTo(p.x, p.y);
   }
   ctx.lineTo(p0.x, p0.y);
-}
+};

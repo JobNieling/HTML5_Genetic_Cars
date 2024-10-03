@@ -1,4 +1,3 @@
-
 module.exports = cw_drawCircle;
 
 function cw_drawCircle(ctx, body, center, radius, angle, color) {

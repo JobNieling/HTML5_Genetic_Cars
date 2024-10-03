@@ -12,16 +12,12 @@ const constants = {
   mutation_range: 1,
   gen_mutation: 0.05,
 };
-module.exports = function(){
+module.exports = function () {
   var currentChoices = new Map();
-  return Object.assign(
-    {},
-    constants,
-    {
-      selectFromAllParents: selectFromAllParents,
-      generateRandom: require("./generateRandom"),
-      pickParent: pickParent.bind(void 0, currentChoices),
-    }
-  );
-}
-module.exports.constants = constants
+  return Object.assign({}, constants, {
+    selectFromAllParents: selectFromAllParents,
+    generateRandom: require("./generateRandom"),
+    pickParent: pickParent.bind(void 0, currentChoices),
+  });
+};
+module.exports.constants = constants;
