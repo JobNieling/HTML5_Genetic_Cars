@@ -12,3 +12,10 @@ The current module-based format required npm and browserify.
 Build with:
 
 npm run-script build
+
+
+This project is using python so to run the browser use the following command:
+python -m http.server
+
+Then open the browser and go to the following link:
+http://localhost:8000/
